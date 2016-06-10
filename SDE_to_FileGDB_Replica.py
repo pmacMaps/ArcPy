@@ -30,7 +30,7 @@ import os, sys, time, datetime, traceback, string
 
 # Time stamp variables
 currentTime = datetime.datetime.now()
-arg1 = currentTime.strftime("%H-%M")
+arg1 = currentTime.strftime("%m-%d-%Y")
 arg2 = currentTime.strftime("%Y-%m-%d %H:%M")
 
 # Create text file for logging results of script
