@@ -5,6 +5,8 @@
 #
 # Created on: 01/06/2017
 #
+# Updated on: 3/21/2017
+#
 # Description: This is a template script for running ArcGIS geoprocessing tool(s).
 # It is ideally suited for scripts that run as Windows scheduled tasks.
 # The script writes success or error messages in a text file.
@@ -26,15 +28,15 @@ import os, sys, time, datetime, traceback, string
 # Time stamp variables
 currentTime = datetime.datetime.now()
 # Date formatted as month-day-year (1-1-2017)
-date1 = currentTime.strftime("%m-%d-%Y")
-# Date formatted as month-day-year-hour-minute-second (1-1-2017-15-42-09)
-date2 = currentTime.strftime("%Y-%m-%d-%H-%M-%S")
+dateToday = currentTime.strftime("%m-%d-%Y")
+# Date formated as month-day-year-hours-minutes-seconds
+dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 
 # Create text file for logging results of script
 # Update file path with your parameters
 # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
 # The example would be GeoprocessingReport_1-1-2017
-file = r'C:\GIS\Results\GeoprocessingReport_%s.txt' % date1
+file = r'C:\GIS\Results\GeoprocessingReport_%s.txt' % dateToday
 
 # Open text file in write mode and log results of script
 report = open(file,'w')
@@ -46,6 +48,7 @@ try:
     starttime = time.clock()
 
     # Put ArcPy geoprocessing code within this section
+    result # = arcpy command with appropriate parameters
 
     # Get the end time of the geoprocessing tool(s)
     finishtime = time.clock()
@@ -61,14 +64,22 @@ try:
     # write the tool's message to the log file
     report.write ("completed " + str(resultValue) + "\n \n")
     # Write a more human readable message to log
-    report.write("Successfully ran the geoprocessing tool in " + str(elapsedtime) + " sec on " + date1)
+    report.write("Successfully ran the geoprocessing tool in " + str(elapsedtime) + " sec on " + dateToday)
 
 # If an error occurs running geoprocessing tool(s) capture error and write message
+# handle error outside of Python system
+except EnvironmentError, ee:
+    tbEE = sys.exc_info()[2]
+    # Write the line number the error occured to the log file
+    report.write("Failed at Line %i \n" % tbEE.tb_lineno)
+    # Write the error message to the log file
+    report.write("Error: {}".format(str(ee)))
+# handle exception error
 except Exception, e:
     # Store information about the error
-    tb = sys.exc_info()[2]
+    tbE = sys.exc_info()[2]
     # Write the line number the error occured to the log file
-    report.write("Failed at Line %i \n" % tb.tb_lineno)
+    report.write("Failed at Line %i \n" % tbE.tb_lineno)
     # Write the error message to the log file
     report.write("Error: {}".format(e.message))
 
