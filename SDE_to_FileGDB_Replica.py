@@ -39,7 +39,7 @@ dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 
 # Create text file for logging results of script
 # Change this to a valid file path
-file = r'C:\GIS\Results\GeoprocessingReport_%s.txt' % dateToday
+file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
 
 # Open text file and log results of script
 report = open(file,'w')
@@ -73,9 +73,9 @@ try:
     # store tool result message in a variable
     resultValue = result.getMessages()
     # write the tool's message to the log file
-    report.write ("completed " + str(resultValue) + "\n \n")
+    report.write("completed {} \n \n".format(str(resultValue)))
     # Write a more human readable message to log
-    report.write("Successfully ran replication from " + sde + " to " + child_gdb + " in " + str(elapsedtime) + " sec on " + dateToday)
+    report.write("Successfully ran replication from {} to {} in {} seconds on {}".format(sde, child_gdb, str(elapsedtime), dateToday))
 
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system

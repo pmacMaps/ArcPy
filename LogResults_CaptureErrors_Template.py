@@ -36,7 +36,7 @@ dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 # Update file path with your parameters
 # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
 # The example would be GeoprocessingReport_1-1-2017
-file = r'C:\GIS\Results\GeoprocessingReport_%s.txt' % dateToday
+file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
 
 # Open text file in write mode and log results of script
 report = open(file,'w')
@@ -62,9 +62,9 @@ try:
     # store tool result message in a variable
     resultValue = result.getMessages()
     # write the tool's message to the log file
-    report.write ("completed " + str(resultValue) + "\n \n")
+    report.write ("completed {} \n \n".format(str(resultValue)))
     # Write a more human readable message to log
-    report.write("Successfully ran the geoprocessing tool in " + str(elapsedtime) + " sec on " + dateToday)
+    report.write("Successfully ran the geoprocessing tool in {} seconds on {}".format(str(elapsedtime), dateToday))
 
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system
