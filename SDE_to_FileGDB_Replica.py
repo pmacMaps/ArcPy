@@ -37,15 +37,15 @@ dateToday = currentTime.strftime("%m-%d-%Y")
 # Date formated as month-day-year-hours-minutes-seconds
 dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 
-# Create text file for logging results of script
-# Change this to a valid file path
-file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
-
-# Open text file and log results of script
-report = open(file,'w')
-
 # Try to run Replication
 try:
+    # Create text file for logging results of script
+    # Change this to a valid file path
+    file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
+
+    # Open text file and log results of script
+    report = open(file,'w')
+    
     # get time stamp for start of tool
     starttime = time.clock()
 

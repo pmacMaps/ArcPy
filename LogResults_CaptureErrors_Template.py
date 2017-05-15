@@ -32,18 +32,18 @@ dateToday = currentTime.strftime("%m-%d-%Y")
 # Date formated as month-day-year-hours-minutes-seconds
 dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 
-# Create text file for logging results of script
-# Update file path with your parameters
-# Each time the script runs, it creates a new text file with the date1 variable as part of the file name
-# The example would be GeoprocessingReport_1-1-2017
-file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
-
-# Open text file in write mode and log results of script
-report = open(file,'w')
-
 # Run geoprocessing tool.
 # If there is an error with the tool, it will break and run the code within the except statement
-try:
+try:    
+    # Create text file for logging results of script
+    # Update file path with your parameters
+    # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
+    # The example would be GeoprocessingReport_1-1-2017
+    file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
+
+    # Open text file in write mode and log results of script
+    report = open(file,'w')
+    
     # Get the start time of the geoprocessing tool(s)
     starttime = time.clock()
 
