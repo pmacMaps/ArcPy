@@ -34,7 +34,7 @@ dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 
 # Run geoprocessing tool.
 # If there is an error with the tool, it will break and run the code within the except statement
-try:    
+try:
     # Create text file for logging results of script
     # Update file path with your parameters
     # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
@@ -43,7 +43,7 @@ try:
 
     # Open text file in write mode and log results of script
     report = open(file,'w')
-    
+
     # Get the start time of the geoprocessing tool(s)
     starttime = time.clock()
 
@@ -68,14 +68,14 @@ try:
 
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system
-except EnvironmentError, ee:
+except EnvironmentError as ee:
     tbEE = sys.exc_info()[2]
     # Write the line number the error occured to the log file
     report.write("Failed at Line %i \n" % tbEE.tb_lineno)
     # Write the error message to the log file
     report.write("Error: {}".format(str(ee)))
 # handle exception error
-except Exception, e:
+except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
     # Write the line number the error occured to the log file
