@@ -5,7 +5,7 @@
 #
 # Created on: 05/12/2016
 #
-# Updated on: 3/21/2017
+# Updated on: 7/14/2017
 #
 # Description: Synchronizes updates between a parent and child replica geodatabase in favor of the parent.
 # The parent geodatabase is a SDE enterprise geodatabase. The child is a file geodatabase
@@ -27,8 +27,7 @@
 # ---------------------------------------------------------------------------------------------------------------------------------------------------
 
 # Import system modules
-import arcpy
-import os, sys, time, datetime, traceback, string
+import arcpy, sys, time, datetime
 
 # Time stamp variables
 currentTime = datetime.datetime.now()
@@ -40,11 +39,13 @@ dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
 # Try to run Replication
 try:
     # Create text file for logging results of script
-    # Change this to a valid file path
-    file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
+    # Update file path with your parameters
+    # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
+    # The example would be GeoprocessingReport_1-1-2017
+    logFile = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
 
-    # Open text file and log results of script
-    report = open(file,'w')
+    # variable to store messages for log file. Messages written in finally statement at end of script
+    logMsg = ''
 
     # get time stamp for start of tool
     starttime = time.clock()
@@ -72,27 +73,30 @@ try:
         time.sleep(0.2)
     # store tool result message in a variable
     resultValue = result.getMessages()
-    # write the tool's message to the log file
-    report.write("completed {} \n \n".format(str(resultValue)))
-    # Write a more human readable message to log
-    report.write("Successfully ran replication from {} to {} in {} seconds on {}".format(sde, child_gdb, str(elapsedtime), dateToday))
-
+    # add the tool's message to the log message
+    logMsg += "completed {}\n".format(str(resultValue))
+    # add a more human readable message to log message
+    logMsg += "\nSuccessfully ran replication from {} to {} in {} seconds on {}\n".format(sde, child_gdb, str(elapsedtime), dateToday)
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system
-except EnvironmentError as ee:
-    tbEE = sys.exc_info()[2]
-    # Write the line number the error occured to the log file
-    report.write("Failed at Line %i \n" % tbEE.tb_lineno)
-    # Write the error message to the log file
-    report.write("Error: {}".format(str(ee)))
+except EnvironmentError as e:
+    tbE = sys.exc_info()[2]
+    # add the line number the error occured to the log message
+    logMsg += "\nFailed at Line %i\n" % tbE.tb_lineno
+    # add the error message to the log message
+    logMsg += "\nError: {}\n".format(str(e))
 # handle exception error
 except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
-    # Write the line number the error occured to the log file
-    report.write("Failed at Line %i \n" % tbE.tb_lineno)
-    # Write the error message to the log file
-    report.write("Error: {}".format(e.message))
-
-# close log file
-report.close()
+    # add the line number the error occured to the log message
+    logMsg += "\nFailed at Line %i\n" % tbE.tb_lineno
+    # add the error message to the log message
+    logMsg += "\nError: {}\n".format(e.message)
+finally:
+    # write message to log file
+    try:
+        with open(logFile, 'a') as f:
+            f.write(str(logMsg))
+    except:
+        pass
