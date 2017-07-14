@@ -8,7 +8,7 @@
 ##############################################################################################
 
 # Import the arcpy module and set the current workspace
-import arcpy, sys, traceback
+import arcpy, sys
 
 try:
     arcpy.env.workspace = r"enter file path within quotes"
@@ -64,15 +64,14 @@ try:
     del iCur
 
     print "Script completed"
-
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system
-except EnvironmentError as ee:
-    tbEE = sys.exc_info()[2]
+except EnvironmentError as e:
+    tbE = sys.exc_info()[2]
     # Print the line number the error occured
-    print("Failed at Line %i \n" % tbEE.tb_lineno)
+    print("Failed at Line %i \n" % tbE.tb_lineno)
     # Print the error message
-    print("Error: {}".format(str(ee)))
+    print("Error: {}".format(str(e)))
 # handle exception error
 except Exception as e:
     # Store information about the error
