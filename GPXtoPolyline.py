@@ -6,7 +6,7 @@
 # "Telling the stories of our world through the power of maps"
 
 # Import system models
-import arcpy, sys, traceback
+import arcpy, sys
 
 try:
     # Define parameter variables for use in ArcGIS toolbox script
@@ -27,11 +27,11 @@ try:
 
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system
-except EnvironmentError as ee:
-    tbEE = sys.exc_info()[2]
+except EnvironmentError as e:
+    tbE = sys.exc_info()[2]
     # Write the error message to tool's dialog window
-    arcpy.AddError("Failed at Line %i \n" % tbEE.tb_lineno)
-    arcpy.AddError("Error: {}".format(str(ee)))
+    arcpy.AddError("Failed at Line %i \n" % tbE.tb_lineno)
+    arcpy.AddError("Error: {}".format(str(e)))
 # handle exception error
 except Exception as e:
     # Store information about the error
