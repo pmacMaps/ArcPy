@@ -5,6 +5,7 @@
 # Created by: Patrick McKinney, Cumberland County GIS
 # Contact: pnmcartography@gmail.com
 # "Telling the stories of our world through the power of maps"
+# Updated on: 12/7/2018
 ##############################################################################################
 
 # Import the arcpy module and set the current workspace
@@ -69,7 +70,7 @@ try:
 except EnvironmentError as e:
     tbE = sys.exc_info()[2]
     # Print the line number the error occured
-    print("Failed at Line %i \n" % tbE.tb_lineno)
+    print("Failed at Line {}\n".format(tbE.tb_lineno))
     # Print the error message
     print("Error: {}".format(str(e)))
 # handle exception error
@@ -77,6 +78,6 @@ except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
     # Print the line number the error occured
-    print("Failed at Line %i \n" % tbE.tb_lineno)
+    print("Failed at Line {}\n".format(tbE.tb_lineno))
     # Print the error message
     print("Error: {}".format(e.message))

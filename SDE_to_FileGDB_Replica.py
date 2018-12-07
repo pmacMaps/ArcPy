@@ -5,7 +5,7 @@
 #
 # Created on: 05/12/2016
 #
-# Updated on: 7/14/2017
+# Updated on: 12/7/2018
 #
 # Description: Synchronizes updates between a parent and child replica geodatabase in favor of the parent.
 # The parent geodatabase is a SDE enterprise geodatabase. The child is a file geodatabase
@@ -29,15 +29,15 @@
 # Import system modules
 import arcpy, sys, time, datetime
 
-# Time stamp variables
-currentTime = datetime.datetime.now()
-# Date formatted as month-day-year (1-1-2017)
-dateToday = currentTime.strftime("%m-%d-%Y")
-# Date formated as month-day-year-hours-minutes-seconds
-dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
-
 # Try to run Replication
 try:
+    # Time stamp variables
+    currentTime = datetime.datetime.now()
+    # Date formatted as month-day-year (1-1-2017)
+    dateToday = currentTime.strftime("%m-%d-%Y")
+    # Date formated as month-day-year-hours-minutes-seconds
+    dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
+
     # Create text file for logging results of script
     # Update file path with your parameters
     # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
@@ -82,7 +82,7 @@ try:
 except EnvironmentError as e:
     tbE = sys.exc_info()[2]
     # add the line number the error occured to the log message
-    logMsg += "\nFailed at Line %i\n" % tbE.tb_lineno
+    logMsg += "\nFailed at Line {}\n".format(tbE.tb_lineno)
     # add the error message to the log message
     logMsg += "\nError: {}\n".format(str(e))
 # handle exception error
@@ -90,13 +90,13 @@ except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
     # add the line number the error occured to the log message
-    logMsg += "\nFailed at Line %i\n" % tbE.tb_lineno
+    logMsg += "\nFailed at Line {}\n".format(tbE.tb_lineno)
     # add the error message to the log message
     logMsg += "\nError: {}\n".format(e.message)
 finally:
     # write message to log file
     try:
-        with open(logFile, 'a') as f:
+        with open(logFile, 'w') as f:
             f.write(str(logMsg))
     except:
         pass

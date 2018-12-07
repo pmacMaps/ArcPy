@@ -12,6 +12,8 @@
 #
 # Created on: 7/23/2018
 #
+# Updated on: 12/7/2018
+#
 # Disclaimer: CUMBERLAND COUNTY ASSUMES NO LIABILITY ARISING FROM USE OF THESE MAPS OR DATA. THE MAPS AND DATA ARE PROVIDED WITHOUT
 # WARRANTY OF ANY KIND, EITHER EXPRESSED OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND
 # FITNESS FOR A PARTICULAR PURPOSE.
@@ -23,16 +25,16 @@
 # Import system modules
 import arcpy, sys, time, datetime, os
 
-# Time stamp variables
-current_time = datetime.datetime.now()
-# Date formatted as month-day-year (1-1-2017)
-date_today = current_time.strftime("%m-%d-%Y")
-# Date formated as month-day-year-hours-minutes-seconds
-date_today_time = current_time.strftime("%m-%d-%Y-%H-%M-%S")
-
 # Run geoprocessing tool.
 # If there is an error with the tool, it will break and run the code within the except statement
 try:
+    # Time stamp variables
+    current_time = datetime.datetime.now()
+    # Date formatted as month-day-year (1-1-2017)
+    date_today = current_time.strftime("%m-%d-%Y")
+    # Date formated as month-day-year-hours-minutes-seconds
+    date_today_time = current_time.strftime("%m-%d-%Y-%H-%M-%S")
+
     # If you want to overwrite an existing feature class, uncomment this line
     # arcpy.env.overwriteOutput = True
 

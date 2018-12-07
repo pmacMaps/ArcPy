@@ -5,7 +5,7 @@
 #
 # Created on: 01/2018
 #
-# Updated on: 01/2018
+# Updated on: 12/7/2018
 #
 # Description: This is a template script for downloading a file from an FTP site
 # to a local or network drive.  Results and error messages are written to a text file.
@@ -114,8 +114,8 @@ try:
 except EnvironmentError as e:
     tbE = sys.exc_info()[2]
     # add the line number the error occured to the log message
-    log_text += "\nFailed at Line %i \n" % tbE.tb_lineno
-    print 'Failed at Line %i \n' % tbE.tb_lineno
+    log_text += "\nFailed at Line {}\n".format(tbE.tb_lineno)
+    print 'Failed at Line {}\n'.format(tbE.tb_lineno)
     # add the error message to the log message
     log_text += "\nError: {}\n".format(str(e))
     print 'Error: {}\n'.format(str(e))
@@ -124,15 +124,15 @@ except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
     # add the line number the error occured to the log message
-    log_text += "\nFailed at Line %i\n" % tbE.tb_lineno
-    print 'Failed at Line %i\n' % tbE.tb_lineno
+    log_text += "\nFailed at Line {}\n".format(tbE.tb_lineno)
+    print 'Failed at Line {}\n'.format(tbE.tb_lineno)
     # add the error message to the log message
     log_text += "\nError: {}\n".format(e.message)
     print 'Error: {}\n'.format(e.message)
 finally:
     # write message to log file
     try:
-        with open(log_file, 'a') as f:
+        with open(log_file, 'w') as f:
             f.write(str(log_text))
     except:
         pass

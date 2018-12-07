@@ -30,12 +30,12 @@ try:
 except EnvironmentError as e:
     tbE = sys.exc_info()[2]
     # Write the error message to tool's dialog window
-    arcpy.AddError("Failed at Line %i \n" % tbE.tb_lineno)
+    arcpy.AddError("Failed at Line {}\n".format(tbE.tb_lineno))
     arcpy.AddError("Error: {}".format(str(e)))
 # handle exception error
 except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
     # Write the error message to tool's dialog window
-    arcpy.AddError("Failed at Line %i \n" % tbE.tb_lineno)
+    arcpy.AddError("Failed at Line {}\n".format(tbE.tb_lineno))
     arcpy.AddErro("Error: {}".format(e.message))
