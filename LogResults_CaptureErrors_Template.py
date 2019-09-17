@@ -5,7 +5,7 @@
 #
 # Created on: 01/06/2017
 #
-# Updated on: 12/7/2018
+# Updated on: 9/17/2019
 #
 # Description: This is a template script for running ArcGIS geoprocessing tool(s).
 # It is ideally suited for scripts that run as Windows scheduled tasks.
@@ -28,62 +28,65 @@ import arcpy, sys, time, datetime
 # If there is an error with the tool, it will break and run the code within the except statement
 try:
     # Time stamp variables
-    currentTime = datetime.datetime.now()
+    current_time = datetime.datetime.now()
     # Date formatted as month-day-year (1-1-2017)
-    dateToday = currentTime.strftime("%m-%d-%Y")
+    date_today = current_time.strftime("%m-%d-%Y")
     # Date formated as month-day-year-hours-minutes-seconds
-    dateTodayTime = currentTime.strftime("%m-%d-%Y-%H-%M-%S")
+    date_today_time = current_time.strftime("%m-%d-%Y-%H-%M-%S")
 
     # Create text file for logging results of script
     # Update file path with your parameters
     # Each time the script runs, it creates a new text file with the date1 variable as part of the file name
     # The example would be GeoprocessingReport_1-1-2017
-    logFile = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(dateToday)
+    log_file = r'C:\GIS\Results\GeoprocessingReport_{}.txt'.format(date_today)
 
     # variable to store messages for log file. Messages written in finally statement at end of script
-    logMsg = ''
+    log_message = ''
 
     # Get the start time of the geoprocessing tool(s)
-    starttime = time.clock()
+    start_time = time.clock()
 
     # Put ArcPy geoprocessing code within this section
     result # = arcpy command with appropriate parameters
-
-    # Get the end time of the geoprocessing tool(s)
-    finishtime = time.clock()
-    # Get the total time to run the geoprocessing tool(s)
-    elapsedtime = finishtime - starttime
 
     # write result messages to log
     # delay writing results until geoprocessing tool gets the completed code
     while result.status < 4:
         time.sleep(0.2)
     # store tool result message in a variable
-    resultValue = result.getMessages()
+    result_value = result.getMessages()
     # add the tool's message to the log file message
-    logMsg += "completed {}\n".format(str(resultValue))
+    log_message += "completed {}\n".format(str(result_value))
+
+    # Get the end time of the geoprocessing tool(s)
+    finish_time = time.clock()
+    # Get the total time to run the geoprocessing tool(s)
+    elapsed_time = finish_time - start_time
+    # total time in minutes
+    elapsed_time_minutes =  round((elapsed_time / 60), 2)
+
     # add a more human readable message to log message
-    logMsg += "\nSuccessfully ran the geoprocessing tool in {} seconds on {}\n".format(str(elapsedtime), dateToday)
+    log_message += "\nSuccessfully ran the geoprocessing tool in {} seconds on {}\n".format(str(elapsed_time), date_today)
 # If an error occurs running geoprocessing tool(s) capture error and write message
 # handle error outside of Python system
 except EnvironmentError as e:
     tbE = sys.exc_info()[2]
     # add the line number the error occured to the log message
-    logMsg += "\nFailed at Line {}\n".format(tbE.tb_lineno)
+    log_message += "\nFailed at Line {}\n".format(tbE.tb_lineno)
     # add the error message to the log message
-    logMsg += "\nError: {}\n".format(str(e))
+    log_message += "\nError: {}\n".format(str(e))
 # handle exception error
 except Exception as e:
     # Store information about the error
     tbE = sys.exc_info()[2]
     # add the line number the error occured to the log message
-    logMsg += "\nFailed at Line {}\n".format(tbE.tb_lineno)
+    log_message += "\nFailed at Line {}\n".format(tbE.tb_lineno)
     # add the error message to the log message
-    logMsg += "\nError: {}\n".format(e.message)
+    log_message += "\nError: {}\n".format(e.message)
 finally:
     # write message to log file
     try:
-        with open(logFile, 'w') as f:
-            f.write(str(logMsg))
+        with open(log_file, 'w') as f:
+            f.write(str(log_message))
     except:
         pass
